@@ -3,15 +3,18 @@ package com.hhdys.testandroid;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hhdys.testandroid.NewItemFragment.OnNewItemAddedListener;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnNewItemAddedListener {
 	private ListView lv;
 	private EditText et;
 	ArrayAdapter<String> ad;
@@ -21,12 +24,12 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		list = new ArrayList<String>();
-		ad = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, list);
-		et = (EditText) findViewById(R.id.editText1);
-		lv = (ListView) findViewById(R.id.listView1);
-		lv.setAdapter(ad);
+		FragmentManager fm = getFragmentManager();
+		ToDoListFragment toDoListFragment = (ToDoListFragment) fm
+				.findFragmentById(R.id.ToDoListFragment);
+		list=new ArrayList<String>();
+		ad=new ArrayAdapter<String>(this, R.layout.todolist_item,list);
+		toDoListFragment.setListAdapter(ad);
 	}
 
 	@Override
@@ -40,6 +43,13 @@ public class MainActivity extends Activity {
 		list.add(0, et.getText().toString());
 		ad.notifyDataSetChanged();
 		et.setText("");
+	}
+
+	@Override
+	public void onNewItemAdded(String newItem) {
+		// TODO Auto-generated method stub
+		list.add(0,newItem);
+		ad.notifyDataSetChanged();
 	}
 
 }

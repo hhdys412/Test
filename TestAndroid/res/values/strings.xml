@@ -3,5 +3,7 @@
 
     <string name="app_name">TestAndroid</string>
     <string name="menu_settings">关于</string>
+    <string name="addItemHint">Add</string>
+    <string name="title_activity_details">DetailsActivity</string>
 
 </resources>
